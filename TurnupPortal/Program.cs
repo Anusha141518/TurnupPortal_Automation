@@ -1,38 +1,48 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using TurnupPortal.Pages;
 
-//Open chrome browser
-IWebDriver driver = new ChromeDriver();
-driver.Manage().Window.Maximize();
-
-//Launch turnup portal and navigate to website login page
-driver.Navigate().GoToUrl("http://horse.industryconnect.io/Account/Login");
-
-//Identify username textbox and enter valid username
-IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
-usernameTextbox.SendKeys("hari");
-
-//Identify password textbox and enter valid password
-IWebElement usernamePassword = driver.FindElement(By.Id("Password"));
-usernamePassword.SendKeys("123123");
-
-//Identify login button and click on the button
-IWebElement loginButton = driver.FindElement(By.XPath("//*[@id=\"loginForm\"]/form/div[3]/input[1]"));
-loginButton.Click();
-
-//Check if the user has logged in successfully
- //ExpectedResult = "Hello hari!";
- IWebElement ActualResult = driver.FindElement(By.XPath("//*[@id=\"logoutForm\"]/ul/li/a"));
-
-if(ActualResult.Text == "Hello hari!")
+public class Program
 {
-    Console.WriteLine("User has logged in successfully");
+    private static void Main(string[] args)
+    {
+        //Open chrome browser
+        IWebDriver driver = new ChromeDriver();
 
+        //LoginPage page object initialize and definition
+        LoginPage loginPageObj = new LoginPage();
+        loginPageObj.LoginAction(driver);
+
+        //Home page object initialize and definition
+        HomePage homePageObj = new HomePage();
+        homePageObj.GoToTMPage(driver);
+
+        //TMPage page object initialize and definition
+        TMPage tmPageObj = new TMPage();
+        tmPageObj.CreateTimeRecord(driver);
+    }
 }
-else
+        /*
+        //Check if the user has logged in successfully
+        //ExpectedResult = "Hello hari!";
+        IWebElement ActualResult = driver.FindElement(By.XPath("//*[@id=\"logoutForm\"]/ul/li/a"));
 
-{
-    Console.WriteLine("User has not logged in successfully");
-}
+        if (ActualResult.Text == "Hello hari!")
+        {
+            Console.WriteLine("User has logged in successfully");
 
-driver.Quit();
+        }
+        else
+
+        {
+            Console.WriteLine("User has not logged in successfully");
+        }
+
+        // Test case - create a new time record
+
+        
+
+      
+        */
+
+
